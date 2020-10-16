@@ -1,0 +1,14 @@
+version: "3"
+services:
+  strapi:
+    image: strapi/strapi
+    volumes:
+      - ./packages/strapi-back:/srv/app
+    ports:
+      - "1337:1337"
+  front:
+    build: ./packages/strapi-front
+    volumes:
+      - ./packages/strapi-front:/app
+    ports:
+      - "3000:3000"

@@ -1,0 +1,16 @@
+query getProject($id: ID!) {
+  project(id: $id) {
+    id
+    name
+    metrics {
+      data
+    }
+  }
+}
+
+query getProjects {
+  projects {
+    id
+    name
+  }
+}
