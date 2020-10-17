@@ -11,7 +11,7 @@ import {
 } from "graphqlTypes";
 import PageWithHeader from "components/layout/withHeader";
 import LessonHeader from "components/layout/LessonHeader";
-import { Spinner } from "bumbag/ts/Spinner/styles";
+import { Spinner } from "bumbag";
 
 export default function CourseList() {
   const {
