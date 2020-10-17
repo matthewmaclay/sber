@@ -3,6 +3,7 @@ query getLessons($status: ENUM_LESSON_STATUS) {
     status
     id
     title
+    time
   }
 }
 

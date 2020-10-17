@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from 'styled-components';
 import Link from "next/link";
-import LessonHeader from '../../src/components/header/LessonHeader';
+import EditorHeader from '../../src/components/header/EditorHeader';
 
 import { Flex, Box } from "bumbag";
 import { useGetLessonsQuery, Enum_Lesson_Status } from "graphqlTypes";
@@ -73,7 +73,7 @@ export default function CourseList() {
 	return (
 		<StyledCourseList>
 			<StyledHeader>
-				<LessonHeader fun={handleClick}/>
+				<EditorHeader fun={handleClick} />
 			</StyledHeader>
 			<StyledCars >
 				<Flex flexDirection="row" flexWrap="wrap">

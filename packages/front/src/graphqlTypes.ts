@@ -220,6 +220,7 @@ export type Lesson = {
   title?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
   status?: Maybe<Enum_Lesson_Status>;
+  time?: Maybe<Scalars['String']>;
   created_by?: Maybe<AdminUser>;
   updated_by?: Maybe<AdminUser>;
   comments?: Maybe<Array<Maybe<Comment>>>;
@@ -359,6 +360,7 @@ export type LessonGroupBy = {
   title?: Maybe<Array<Maybe<LessonConnectionTitle>>>;
   content?: Maybe<Array<Maybe<LessonConnectionContent>>>;
   status?: Maybe<Array<Maybe<LessonConnectionStatus>>>;
+  time?: Maybe<Array<Maybe<LessonConnectionTime>>>;
   created_by?: Maybe<Array<Maybe<LessonConnectionCreated_By>>>;
   updated_by?: Maybe<Array<Maybe<LessonConnectionUpdated_By>>>;
 };
@@ -395,6 +397,12 @@ export type LessonConnectionContent = {
 
 export type LessonConnectionStatus = {
   __typename?: 'LessonConnectionStatus';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<LessonConnection>;
+};
+
+export type LessonConnectionTime = {
+  __typename?: 'LessonConnectionTime';
   key?: Maybe<Scalars['String']>;
   connection?: Maybe<LessonConnection>;
 };
@@ -611,7 +619,7 @@ export type UploadFileRelatedArgs = {
   where?: Maybe<Scalars['JSON']>;
 };
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Comment | CommentConnection | CommentAggregator | CommentAggregatorSum | CommentAggregatorAvg | CommentAggregatorMin | CommentAggregatorMax | CommentGroupBy | CommentConnectionId | CommentConnectionCreated_At | CommentConnectionUpdated_At | CommentConnectionTopOffset | CommentConnectionContent | CommentConnectionLesson | CommentConnectionCreated_By | CommentConnectionUpdated_By | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Lesson | LessonConnection | LessonAggregator | LessonGroupBy | LessonConnectionId | LessonConnectionCreated_At | LessonConnectionUpdated_At | LessonConnectionTitle | LessonConnectionContent | LessonConnectionStatus | LessonConnectionCreated_By | LessonConnectionUpdated_By | CreateLessonPayload | UpdateLessonPayload | DeleteLessonPayload | Project | ProjectConnection | ProjectAggregator | ProjectGroupBy | ProjectConnectionId | ProjectConnectionCreated_At | ProjectConnectionUpdated_At | ProjectConnectionName | ProjectConnectionCreated_By | ProjectConnectionUpdated_By | CreateProjectPayload | UpdateProjectPayload | DeleteProjectPayload | Stage | StageConnection | StageAggregator | StageGroupBy | StageConnectionId | StageConnectionCreated_At | StageConnectionUpdated_At | StageConnectionNumber | StageConnectionProject | StageConnectionCreated_By | StageConnectionUpdated_By | CreateStagePayload | UpdateStagePayload | DeleteStagePayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionCreated_By | UploadFileConnectionUpdated_By | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_By | UsersPermissionsRoleConnectionUpdated_By | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_By | UsersPermissionsUserConnectionUpdated_By | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentNewMessage | ComponentNewMetrics;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Comment | CommentConnection | CommentAggregator | CommentAggregatorSum | CommentAggregatorAvg | CommentAggregatorMin | CommentAggregatorMax | CommentGroupBy | CommentConnectionId | CommentConnectionCreated_At | CommentConnectionUpdated_At | CommentConnectionTopOffset | CommentConnectionContent | CommentConnectionLesson | CommentConnectionCreated_By | CommentConnectionUpdated_By | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Lesson | LessonConnection | LessonAggregator | LessonGroupBy | LessonConnectionId | LessonConnectionCreated_At | LessonConnectionUpdated_At | LessonConnectionTitle | LessonConnectionContent | LessonConnectionStatus | LessonConnectionTime | LessonConnectionCreated_By | LessonConnectionUpdated_By | CreateLessonPayload | UpdateLessonPayload | DeleteLessonPayload | Project | ProjectConnection | ProjectAggregator | ProjectGroupBy | ProjectConnectionId | ProjectConnectionCreated_At | ProjectConnectionUpdated_At | ProjectConnectionName | ProjectConnectionCreated_By | ProjectConnectionUpdated_By | CreateProjectPayload | UpdateProjectPayload | DeleteProjectPayload | Stage | StageConnection | StageAggregator | StageGroupBy | StageConnectionId | StageConnectionCreated_At | StageConnectionUpdated_At | StageConnectionNumber | StageConnectionProject | StageConnectionCreated_By | StageConnectionUpdated_By | CreateStagePayload | UpdateStagePayload | DeleteStagePayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionCreated_By | UploadFileConnectionUpdated_By | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_By | UsersPermissionsRoleConnectionUpdated_By | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_By | UsersPermissionsUserConnectionUpdated_By | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentNewMessage | ComponentNewMetrics;
 
 export type UsersPermissionsMe = {
   __typename?: 'UsersPermissionsMe';
@@ -1355,6 +1363,7 @@ export type LessonInput = {
   content?: Maybe<Scalars['String']>;
   comments?: Maybe<Array<Maybe<Scalars['ID']>>>;
   status?: Maybe<Enum_Lesson_Status>;
+  time?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1369,6 +1378,7 @@ export type EditLessonInput = {
   content?: Maybe<Scalars['String']>;
   comments?: Maybe<Array<Maybe<Scalars['ID']>>>;
   status?: Maybe<Enum_Lesson_Status>;
+  time?: Maybe<Scalars['String']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1590,7 +1600,7 @@ export type GetLessonsQuery = (
   { __typename?: 'Query' }
   & { lessons?: Maybe<Array<Maybe<(
     { __typename?: 'Lesson' }
-    & Pick<Lesson, 'status' | 'id' | 'title'>
+    & Pick<Lesson, 'status' | 'id' | 'title' | 'time'>
   )>>> }
 );
 
@@ -1631,6 +1641,7 @@ export const GetLessonsDocument = gql`
     status
     id
     title
+    time
   }
 }
     `;
