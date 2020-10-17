@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import style from 'styled-components';
 import { Button } from 'bumbag';
+import Link from "next/link";
 
 const StyledLessonHeader = style.div`
     display: flex;
@@ -11,37 +12,51 @@ const StyledLessonHeader = style.div`
 
 const StyledInput = style.div`
     margin: 32px;
-    font-family: Roboto;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    line-height: 18px;
+    line-height: 18px;      
+    color: #333333;
+    cursor: pointer;
 `
 
-const StyledBlockStatus  = style.div`
+const StyledBlockStatus = style.div`
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 `
 
-const LessonHeader = () => {
+const StyledBlockButton = style.div`
+
+`
+
+const LessonHeader = ({ fun }) => {
+    function handleClick(type: string) {
+        fun(type)
+    }
     return(
         <StyledLessonHeader>
             <StyledBlockStatus> 
-                <StyledInput>
+                <StyledInput onClick={() => handleClick('Draft')}>
                     Черновики
                 </StyledInput>
-                <StyledInput>
+                <StyledInput onClick={() => handleClick('Fix')}>
                     Исправить
                 </StyledInput>
-                <StyledInput>
+                <StyledInput onClick={() => handleClick('Check')}>
                     На проверке
                 </StyledInput>
-                <StyledInput>
+                <StyledInput onClick={() => handleClick('Complete')}>
                     Завершено
                 </StyledInput>
             </StyledBlockStatus>
-                <Button palette="primary">
-                    + Создать
-                </Button>
+                <Link href='/author'>  
+                    <StyledBlockButton>
+                        <Button palette="primary">
+                            + Создать
+                        </Button>
+                    </StyledBlockButton>
+                </Link>
         </StyledLessonHeader>
     )
 }
