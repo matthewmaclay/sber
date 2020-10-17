@@ -49,8 +49,8 @@ export default function App({ Component, pageProps }: Props) {
       <BumbagProvider theme={theme}>
         <PageWithHeader>
           <Head>
-          <link rel="stylesheet" href="css/medium-editor.css"/>
-          <link rel="stylesheet" href="css/themes/bootstrap.css"/>
+            <link rel="stylesheet" href="css/medium-editor.css" />
+            <link rel="stylesheet" href="css/themes/bootstrap.css" />
           </Head>
           <Component {...pageProps} />
         </PageWithHeader>

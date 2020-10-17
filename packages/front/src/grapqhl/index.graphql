@@ -1,3 +1,19 @@
+query getLessons ($status: ENUM_LESSON_STATUS) {
+  lessons(where: { status: $status }) {
+    status
+    id
+    title
+  }
+}
+
+query getLesson($id: ID!){
+  lesson(id:$id){
+    status
+    content
+    
+  }
+}
+
 query getProject($id: ID!) {
   project(id: $id) {
     id
