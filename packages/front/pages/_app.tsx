@@ -13,6 +13,9 @@ const theme = {
   global: {
     styles: {
       base: css`
+      body{
+        background-color: white !important;
+      }
         .demo-editor {
           padding: 0 20px;
         }

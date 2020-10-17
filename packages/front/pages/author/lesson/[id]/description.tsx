@@ -10,6 +10,7 @@ import {
   useUpdateLessonContentMutation,
 } from "graphqlTypes";
 import PageWithHeader from "components/layout/withHeader";
+import LessonHeader from "components/layout/LessonHeader";
 
 export default function CourseList() {
   const {
@@ -20,6 +21,7 @@ export default function CourseList() {
     variables: {
       id: id as string,
     },
+    pollInterval: 500,
   });
   const [
     updateContent,
@@ -32,10 +34,10 @@ export default function CourseList() {
     updateContent({ variables: { id, content } });
   };
   return (
-    <PageWithHeader>
+    <LessonHeader id={id}>
       <Flex padding="major-2" flexBasis="30%" flexDirection="column">
         <Editor onChange={handleChange} initialContent={data.lesson.content} />
       </Flex>
-    </PageWithHeader>
+    </LessonHeader>
   );
 }
