@@ -8,10 +8,16 @@ services:
     ports:
       - "127.0.0.1:1337:1337"
   front:
-    build: ./packages/front
+    build: 
+      context: ./packages/front
+      dockerfile: ./packages/front/Dockerfile.dev
     volumes:
       - ./packages/front/src:/app/src
       - ./packages/front/pages:/app/pages
       - ./packages/front/public:/app/public
     ports:
       - "127.0.0.1:3000:3000"
+  api:
+    build: ./packages/apiValidator
+    ports:
+      - "127.0.0.1:3001:3000"

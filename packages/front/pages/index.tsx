@@ -39,13 +39,13 @@ const StyledSplit = style.div`
 
 const Block = ({ role, href }) => {
 	return(
-		<StyledBlock>
-			<Link href={href}>
+		<Link href={href}>
+			<StyledBlock>
 				<h3>
 					{role}
 				</h3>
-			</Link>
-		</StyledBlock>
+			</StyledBlock>
+		</Link>
 	)
 }
 
