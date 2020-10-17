@@ -1,4 +1,4 @@
-query getLessons ($status: ENUM_LESSON_STATUS) {
+query getLessons($status: ENUM_LESSON_STATUS) {
   lessons(where: { status: $status }) {
     status
     id
@@ -6,27 +6,17 @@ query getLessons ($status: ENUM_LESSON_STATUS) {
   }
 }
 
-query getLesson($id: ID!){
-  lesson(id:$id){
+query getLesson($id: ID!) {
+  lesson(id: $id) {
     status
     content
-    
   }
 }
 
-query getProject($id: ID!) {
-  project(id: $id) {
-    id
-    name
-    metrics {
-      data
+mutation updateLessonContent($id: ID!, $content: String) {
+  updateLesson(input: { where: { id: $id }, data: { content: $content } }) {
+    lesson {
+      id
     }
-  }
-}
-
-query getProjects {
-  projects {
-    id
-    name
   }
 }

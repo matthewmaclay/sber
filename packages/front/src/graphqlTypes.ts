@@ -1607,32 +1607,21 @@ export type GetLessonQuery = (
   )> }
 );
 
-export type GetProjectQueryVariables = Exact<{
+export type UpdateLessonContentMutationVariables = Exact<{
   id: Scalars['ID'];
+  content?: Maybe<Scalars['String']>;
 }>;
 
 
-export type GetProjectQuery = (
-  { __typename?: 'Query' }
-  & { project?: Maybe<(
-    { __typename?: 'Project' }
-    & Pick<Project, 'id' | 'name'>
-    & { metrics?: Maybe<Array<Maybe<(
-      { __typename?: 'ComponentNewMetrics' }
-      & Pick<ComponentNewMetrics, 'data'>
-    )>>> }
+export type UpdateLessonContentMutation = (
+  { __typename?: 'Mutation' }
+  & { updateLesson?: Maybe<(
+    { __typename?: 'updateLessonPayload' }
+    & { lesson?: Maybe<(
+      { __typename?: 'Lesson' }
+      & Pick<Lesson, 'id'>
+    )> }
   )> }
-);
-
-export type GetProjectsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetProjectsQuery = (
-  { __typename?: 'Query' }
-  & { projects?: Maybe<Array<Maybe<(
-    { __typename?: 'Project' }
-    & Pick<Project, 'id' | 'name'>
-  )>>> }
 );
 
 
@@ -1705,73 +1694,38 @@ export function useGetLessonLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetLessonQueryHookResult = ReturnType<typeof useGetLessonQuery>;
 export type GetLessonLazyQueryHookResult = ReturnType<typeof useGetLessonLazyQuery>;
 export type GetLessonQueryResult = Apollo.QueryResult<GetLessonQuery, GetLessonQueryVariables>;
-export const GetProjectDocument = gql`
-    query getProject($id: ID!) {
-  project(id: $id) {
-    id
-    name
-    metrics {
-      data
+export const UpdateLessonContentDocument = gql`
+    mutation updateLessonContent($id: ID!, $content: String) {
+  updateLesson(input: {where: {id: $id}, data: {content: $content}}) {
+    lesson {
+      id
     }
   }
 }
     `;
+export type UpdateLessonContentMutationFn = Apollo.MutationFunction<UpdateLessonContentMutation, UpdateLessonContentMutationVariables>;
 
 /**
- * __useGetProjectQuery__
+ * __useUpdateLessonContentMutation__
  *
- * To run a query within a React component, call `useGetProjectQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetProjectQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useUpdateLessonContentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateLessonContentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useGetProjectQuery({
+ * const [updateLessonContentMutation, { data, loading, error }] = useUpdateLessonContentMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      content: // value for 'content'
  *   },
  * });
  */
-export function useGetProjectQuery(baseOptions?: Apollo.QueryHookOptions<GetProjectQuery, GetProjectQueryVariables>) {
-        return Apollo.useQuery<GetProjectQuery, GetProjectQueryVariables>(GetProjectDocument, baseOptions);
+export function useUpdateLessonContentMutation(baseOptions?: Apollo.MutationHookOptions<UpdateLessonContentMutation, UpdateLessonContentMutationVariables>) {
+        return Apollo.useMutation<UpdateLessonContentMutation, UpdateLessonContentMutationVariables>(UpdateLessonContentDocument, baseOptions);
       }
-export function useGetProjectLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProjectQuery, GetProjectQueryVariables>) {
-          return Apollo.useLazyQuery<GetProjectQuery, GetProjectQueryVariables>(GetProjectDocument, baseOptions);
-        }
-export type GetProjectQueryHookResult = ReturnType<typeof useGetProjectQuery>;
-export type GetProjectLazyQueryHookResult = ReturnType<typeof useGetProjectLazyQuery>;
-export type GetProjectQueryResult = Apollo.QueryResult<GetProjectQuery, GetProjectQueryVariables>;
-export const GetProjectsDocument = gql`
-    query getProjects {
-  projects {
-    id
-    name
-  }
-}
-    `;
-
-/**
- * __useGetProjectsQuery__
- *
- * To run a query within a React component, call `useGetProjectsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetProjectsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetProjectsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetProjectsQuery(baseOptions?: Apollo.QueryHookOptions<GetProjectsQuery, GetProjectsQueryVariables>) {
-        return Apollo.useQuery<GetProjectsQuery, GetProjectsQueryVariables>(GetProjectsDocument, baseOptions);
-      }
-export function useGetProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProjectsQuery, GetProjectsQueryVariables>) {
-          return Apollo.useLazyQuery<GetProjectsQuery, GetProjectsQueryVariables>(GetProjectsDocument, baseOptions);
-        }
-export type GetProjectsQueryHookResult = ReturnType<typeof useGetProjectsQuery>;
-export type GetProjectsLazyQueryHookResult = ReturnType<typeof useGetProjectsLazyQuery>;
-export type GetProjectsQueryResult = Apollo.QueryResult<GetProjectsQuery, GetProjectsQueryVariables>;
+export type UpdateLessonContentMutationHookResult = ReturnType<typeof useUpdateLessonContentMutation>;
+export type UpdateLessonContentMutationResult = Apollo.MutationResult<UpdateLessonContentMutation>;
+export type UpdateLessonContentMutationOptions = Apollo.BaseMutationOptions<UpdateLessonContentMutation, UpdateLessonContentMutationVariables>;

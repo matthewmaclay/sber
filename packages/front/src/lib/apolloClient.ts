@@ -9,7 +9,7 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: 'http://localhost:1337/graphql', // Server URL (must be absolute)
+      uri: 'https://admin.digitalscale.dokub.xyz/graphql', // Server URL (must be absolute)
     }),
     cache: new InMemoryCache({
       typePolicies: {

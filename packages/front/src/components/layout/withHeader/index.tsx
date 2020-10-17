@@ -36,12 +36,19 @@ const Logo = styled.img`
   margin-right: 10px;
 `;
 
-const withHeader: React.FC = ({ children }) => {
+interface Props {
+  type: "author" | "editor";
+}
+
+
+
+const withHeader: React.FC<Props> = ({ children }) => {
   const router = useRouter();
 
   return (
     <StyledPageWithHeader
       header={
+        
         <TopNav selectedId={router.pathname}>
           <TopNav.Section>
             <TopNav.Item marginLeft="50px" marginRight="50px">
@@ -60,3 +67,4 @@ const withHeader: React.FC = ({ children }) => {
   );
 };
 export default withHeader;
+

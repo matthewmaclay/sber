@@ -10,6 +10,7 @@ export default function CourseList() {
       status: Enum_Lesson_Status["Fix"],
     },
   });
+  console.log(error)
   if (error) return "ошибка";
   if (loading) return "загрузка";
   return (
