@@ -12,7 +12,7 @@ import {
 import PageWithHeader from "components/layout/withHeader";
 import LessonHeader from "components/layout/LessonHeader";
 
-export default function CourseList() {
+export default function CourseList(props) {
   const {
     query: { id },
   } = useRouter();

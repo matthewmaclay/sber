@@ -13,7 +13,7 @@ import PageWithHeader from "components/layout/withHeader";
 import LessonHeader from "components/layout/LessonHeader";
 import { Spinner } from "bumbag";
 
-export default function CourseList() {
+export default function CourseList(props) {
   const {
     query: { id },
   } = useRouter();
