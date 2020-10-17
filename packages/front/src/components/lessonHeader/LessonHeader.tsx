@@ -22,10 +22,6 @@ const StyledBlockStatus  = style.div`
     display: flex;
 `
 
-const StyledButtonCreate = style.div`
-
-`
-
 const LessonHeader = () => {
     return(
         <StyledLessonHeader>
@@ -43,11 +39,9 @@ const LessonHeader = () => {
                     Завершено
                 </StyledInput>
             </StyledBlockStatus>
-            <StyledButtonCreate>
                 <Button palette="primary">
                     + Создать
                 </Button>
-            </StyledButtonCreate>
         </StyledLessonHeader>
     )
 }
