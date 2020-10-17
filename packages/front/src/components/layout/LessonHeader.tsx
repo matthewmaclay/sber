@@ -11,10 +11,9 @@ const HeaderLink = styled.span`
   display: flex;
   align-items: center;
   font-size: 13px;
-  ${({active})=> {
-
-      if (!active) return 'opacity: 0.6;' 
-  } }
+  ${({ active }) => {
+    if (!active) return "opacity: 0.6;";
+  }}
   & > a {
     color: inherit;
     font-size: inherit;
@@ -99,9 +98,10 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
             borderBottom="1px solid #F2F2F2"
             height="27px"
           >
-            <BackButton>
-              <Link href="/author">
-                <>
+            {" "}
+            <Link href="/author">
+              <BackButton>
+                <div>
                   <Icon
                     marginRight="10px"
                     aria-label="Settings"
@@ -109,9 +109,9 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
                     type="font-awesome"
                   />
                   Все уроки
-                </>
-              </Link>
-            </BackButton>
+                </div>
+              </BackButton>
+            </Link>
           </Flex>
           <TopNav paddingLeft="56px" minHeight="44px" height="44px">
             <TopNav.Section>
@@ -123,15 +123,24 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
                 </TopNav.Item>
               ))}
             </TopNav.Section>
+            <TopNav.Section>
+              <TopNav.Item>
+                <Button marginRight="16px" size="small" >
+                  Поделиться
+                </Button>
+              </TopNav.Item>
+              <TopNav.Item>
+                <Button marginRight="60px" size="small" palette="primary">Отправить в редактуру</Button>
+              </TopNav.Item>
+            </TopNav.Section>
           </TopNav>
         </Flex>
       }
       border="default"
     >
-        <Flex flexDirection="column" justifyContent="center" alignItems="center" >
+      <Flex flexDirection="column" justifyContent="center" alignItems="center">
         {children}
-        </Flex>
-      
+      </Flex>
     </StyledPageWithHeader>
   );
 };

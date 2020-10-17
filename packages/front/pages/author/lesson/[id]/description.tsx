@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Editor from "components/Editor";
 
-import { Flex } from "bumbag";
+import { Box, Flex, Heading } from "bumbag";
 import {
   useGetLessonQuery,
   Enum_Lesson_Status,
@@ -34,6 +34,7 @@ export default function CourseList() {
   };
   return (
     <LessonHeader id={id}>
+      <Heading cursor="default" marginTop="68px" marginBottom="40px" maxWidth="620px" use="h2" >{data.lesson.title}</Heading>
       <Flex padding="major-2" flexBasis="30%" flexDirection="column">
         <Editor onChange={handleChange} initialContent={data.lesson.content} />
       </Flex>

@@ -1613,7 +1613,7 @@ export type GetLessonQuery = (
   { __typename?: 'Query' }
   & { lesson?: Maybe<(
     { __typename?: 'Lesson' }
-    & Pick<Lesson, 'status' | 'content'>
+    & Pick<Lesson, 'status' | 'content' | 'title'>
   )> }
 );
 
@@ -1627,6 +1627,22 @@ export type UpdateLessonContentMutation = (
   { __typename?: 'Mutation' }
   & { updateLesson?: Maybe<(
     { __typename?: 'updateLessonPayload' }
+    & { lesson?: Maybe<(
+      { __typename?: 'Lesson' }
+      & Pick<Lesson, 'id'>
+    )> }
+  )> }
+);
+
+export type CreateLessonMutationVariables = Exact<{
+  title?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CreateLessonMutation = (
+  { __typename?: 'Mutation' }
+  & { createLesson?: Maybe<(
+    { __typename?: 'createLessonPayload' }
     & { lesson?: Maybe<(
       { __typename?: 'Lesson' }
       & Pick<Lesson, 'id'>
@@ -1676,6 +1692,7 @@ export const GetLessonDocument = gql`
   lesson(id: $id) {
     status
     content
+    title
   }
 }
     `;
@@ -1740,3 +1757,37 @@ export function useUpdateLessonContentMutation(baseOptions?: Apollo.MutationHook
 export type UpdateLessonContentMutationHookResult = ReturnType<typeof useUpdateLessonContentMutation>;
 export type UpdateLessonContentMutationResult = Apollo.MutationResult<UpdateLessonContentMutation>;
 export type UpdateLessonContentMutationOptions = Apollo.BaseMutationOptions<UpdateLessonContentMutation, UpdateLessonContentMutationVariables>;
+export const CreateLessonDocument = gql`
+    mutation createLesson($title: String) {
+  createLesson(input: {data: {title: $title}}) {
+    lesson {
+      id
+    }
+  }
+}
+    `;
+export type CreateLessonMutationFn = Apollo.MutationFunction<CreateLessonMutation, CreateLessonMutationVariables>;
+
+/**
+ * __useCreateLessonMutation__
+ *
+ * To run a mutation, you first call `useCreateLessonMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLessonMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLessonMutation, { data, loading, error }] = useCreateLessonMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useCreateLessonMutation(baseOptions?: Apollo.MutationHookOptions<CreateLessonMutation, CreateLessonMutationVariables>) {
+        return Apollo.useMutation<CreateLessonMutation, CreateLessonMutationVariables>(CreateLessonDocument, baseOptions);
+      }
+export type CreateLessonMutationHookResult = ReturnType<typeof useCreateLessonMutation>;
+export type CreateLessonMutationResult = Apollo.MutationResult<CreateLessonMutation>;
+export type CreateLessonMutationOptions = Apollo.BaseMutationOptions<CreateLessonMutation, CreateLessonMutationVariables>;
