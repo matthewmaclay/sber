@@ -1,15 +1,29 @@
 import fetch from 'node-fetch';
+import getUrls from 'get-urls';
 
-export default async function testLinks(array, forbiddenWords) {
+export default async function testLinks(id) {
+
+    const result = await fetch(`https://admin.digitalscale.dokub.xyz/lessons/${id}`).then(
+        res => res.json()).then(res=> { return res.content });
+
+    const forbiddenWords = await fetch('https://admin.digitalscale.dokub.xyz/prohibited-words').then(
+        res => res.json()).then(res => { return res} );
+
+   const getLinks = getUrls(result);
+   const arrayLinks = [];
+   getLinks.forEach(item => {
+        arrayLinks.push(item)
+   })
+
     const promise = [];
-    array.forEach((element,i) => {
+    arrayLinks.forEach((element,i) => {
         promise.push(new Promise(async(resolve, reject) => {
             const html = await fetch(element).then(res => res.text());
             const notValidWords = [];
-            forbiddenWords.forEach(item => {
-                const status = html.includes(item);
+            forbiddenWords.forEach(({ word }) => {
+                const status = html.includes(word);
                 if(status !== false) {
-                    notValidWords.push(item);
+                    notValidWords.push(word);
                 } 
             });
             resolve({ [element]: notValidWords })
