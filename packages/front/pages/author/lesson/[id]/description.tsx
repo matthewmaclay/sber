@@ -21,7 +21,6 @@ export default function CourseList() {
     variables: {
       id: id as string,
     },
-    pollInterval: 500,
   });
   const [
     updateContent,
