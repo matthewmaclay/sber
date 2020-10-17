@@ -3,12 +3,14 @@ services:
   strapi:
     image: strapi/strapi
     volumes:
-      - ./packages/strapi-back:/srv/app
+      - ./packages/strapi:/srv/app
+      - ./packages/strapi/node_modules:/srv/app/node_modules
     ports:
       - "1337:1337"
   front:
-    build: ./packages/strapi-front
+    build: ./packages/front
     volumes:
-      - ./packages/strapi-front:/app
+      - ./packages/front/src:/app/src
+      - ./packages/front/pages:/app/pages
     ports:
       - "3000:3000"
