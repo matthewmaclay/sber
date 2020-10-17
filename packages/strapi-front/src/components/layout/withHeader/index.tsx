@@ -45,10 +45,10 @@ const withHeader: React.FC = ({ children }) => {
         <TopNav selectedId={router.pathname}>
           <TopNav.Section>
             <TopNav.Item marginLeft="50px" marginRight="50px">
-              <HeaderLink>
+              {/* <HeaderLink>
                 <Logo src="https://i.mycdn.me/i?r=AEF0PjOBfKSCKs0AX-NHBglGjl1cOYfrnlldZk9YlWosrTGbRQEY6-ICQyXdCj2nC0iPO0i1bS25atCdys1_w0Ps&i=1&fn=external_8" />
                 <Link href="/"> Digital Scale</Link>
-              </HeaderLink>
+              </HeaderLink> */}
             </TopNav.Item>
           </TopNav.Section>
         </TopNav>
