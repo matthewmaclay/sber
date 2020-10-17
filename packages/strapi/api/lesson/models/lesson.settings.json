@@ -32,7 +32,7 @@
     "time": {
       "type": "string"
     },
-    "uniqueness": {
+    "uniq": {
       "type": "json"
     }
   }
