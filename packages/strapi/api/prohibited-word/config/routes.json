@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/prohibited-words",
+      "handler": "prohibited-word.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prohibited-words/count",
+      "handler": "prohibited-word.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prohibited-words/:id",
+      "handler": "prohibited-word.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/prohibited-words",
+      "handler": "prohibited-word.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/prohibited-words/:id",
+      "handler": "prohibited-word.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/prohibited-words/:id",
+      "handler": "prohibited-word.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
