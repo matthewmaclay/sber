@@ -1,0 +1,12 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prohibited_words",
+  "info": {
+    "name": "prohibitedWords"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {}
+}
