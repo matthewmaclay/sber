@@ -1,6 +1,6 @@
 import React from 'react';
 import style from 'styled-components';
-import Link from 'next/link';
+import Link from "next/link";
 
 const StyledCourseList = style.div`
 	display: flex;
@@ -37,12 +37,14 @@ const StyledSplit = style.div`
 	opacity: 0.12;
 `
 
-const Block = ({ role }) => {
+const Block = ({ role, href }) => {
 	return(
 		<StyledBlock>
-			<h3>
-				{role}
-			</h3>
+			<Link href={href}>
+				<h3>
+					{role}
+				</h3>
+			</Link>
 		</StyledBlock>
 	)
 }
@@ -50,13 +52,9 @@ const Block = ({ role }) => {
 const CourseList = () => {
   return (
 	  	<StyledCourseList>
-			<Link href="/author/lesson" as='/author/lesson'>
-				<Block role="Я автор" />
-			</Link>
+			<Block role="Я автор" href="/author" />
 			<StyledSplit />
-			<Link href="/author/index" as='/author/index'>
-				<Block role="Я редактор" />
-			</Link>
+			<Block role="Я редактор" href="/" />
 		</StyledCourseList>
   	);
 }
