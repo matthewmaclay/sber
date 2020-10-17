@@ -1,17 +1,64 @@
 import React from 'react';
-import dynamic from 'next/dynamic'
+import style from 'styled-components';
+import Link from 'next/link';
 
-const MediumEditor = dynamic(() => import('components/Editor'),{ ssr: false })
+const StyledCourseList = style.div`
+	display: flex;
+	height: 100%;
+`
+const StyledBlock = style.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	background: linear-gradient(180deg, #5F5FE3 0%, #2B2BB3 100%);
+	cursor: pointer;
 
-import { Flex } from 'bumbag';
+	h3 {
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 48px;
+		line-height: 54px;
+		color: #FFFFFF;
+		opacity: 0.5;
+	}
 
-export default function CourseList() {
+	&:hover {
+		h3 {
+			opacity: 1;
+		}
+	}
+`
+
+const StyledSplit = style.div`
+	width: 1px;
+	background: #FCFCFD;
+	opacity: 0.12;
+`
+
+const Block = ({ role }) => {
+	return(
+		<StyledBlock>
+			<h3>
+				{role}
+			</h3>
+		</StyledBlock>
+	)
+}
+
+const CourseList = () => {
   return (
-		<Flex padding="major-2" flexBasis="30%" flexDirection="column">
-			<Flex padding="major-2" flexBasis="30%" flexDirection="column">
-				hello mambo jambo
-			</Flex>
-			<MediumEditor/>
-		</Flex>
+	  	<StyledCourseList>
+			<Link href="/author/index" as='/author/index'>
+				<Block role="Я автор" />
+			</Link>
+			<StyledSplit />
+			<Link href="/pageTest/viewReports" as='/pageTest/viewReports'>
+				<Block role="Я редактор" />
+			</Link>
+		</StyledCourseList>
   	);
 }
+
+export default CourseList;

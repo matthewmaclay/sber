@@ -14,6 +14,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@graphql-codegen/cli": "^1.17.10",
+    "@types/styled-components": "^5.1.4",
     "bumbag": "^1.2.0",
     "chart.js": "^2.9.3",
     "detect-node": "^2.0.4",
