@@ -54,7 +54,7 @@ const CourseList = () => {
 	  	<StyledCourseList>
 			<Block role="Я автор" href="/author" />
 			<StyledSplit />
-			<Block role="Я редактор" href="/" />
+			<Block role="Я редактор" href="/editor" />
 		</StyledCourseList>
   	);
 }
