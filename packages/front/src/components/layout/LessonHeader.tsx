@@ -6,15 +6,19 @@ import { useRouter } from "next/router";
 import { Flex } from "bumbag";
 import { Icon } from "bumbag";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  Enum_Lesson_Status,
+  useGetLessonQuery,
+  useUpdateLessonStatusMutation,
+} from "graphqlTypes";
 
 const HeaderLink = styled.span`
   display: flex;
   align-items: center;
   font-size: 13px;
-  ${({active})=> {
-
-      if (!active) return 'opacity: 0.6;' 
-  } }
+  ${({ active }) => {
+    if (!active) return "opacity: 0.6;";
+  }}
   & > a {
     color: inherit;
     font-size: inherit;
@@ -57,7 +61,11 @@ const StyledPageWithHeader = styled(PageWithHeader)`
 
 const LINKS = [
   {
-    name: "Описание",
+    name: "ТЗ",
+    path: "/author/lesson/[id]/description",
+  },
+  {
+    name: "Материал",
     path: "/author/lesson/[id]/description",
   },
   {
@@ -73,19 +81,70 @@ const LINKS = [
     path: "/author/lesson/[id]/quiz",
   },
   {
-    name: "Проверка",
+    name: "Авторедактура",
     path: "/author/lesson/[id]/check",
+  },
+  {
+    name: "Результат",
+    path: "/author/lesson/[id]/check",
+  },
+];
+
+const LINKS_EDITOR = [
+  {
+    name: "ТЗ",
+    path: "/editor/lesson/[id]/description",
+  },
+  {
+    name: "Материал",
+    path: "/editor/lesson/[id]/description",
+  },
+  {
+    name: "Цели",
+    path: "/editor/lesson/[id]/targets",
+  },
+  {
+    name: "Нагрузка на ученика",
+    path: "/editor/lesson/[id]/load",
+  },
+  {
+    name: "Опросы и задания",
+    path: "/editor/lesson/[id]/quiz",
+  },
+  {
+    name: "Авторедактура",
+    path: "/editor/lesson/[id]/check",
+  },
+  {
+    name: "Результат",
+    path: "/editor/lesson/[id]/check",
   },
 ];
 
 interface Props {
   id?: string;
   activeTab: string;
+  isEditor?: boolean;
 }
 const getPath = (path: string, id: string) => path.replace("[id]", id);
-const LessonHeader: React.FC<Props> = ({ children, id }) => {
+const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
   const router = useRouter();
-
+  debugger
+  const [
+    updateStatus,
+    { data: dataMut, loading: loadingMut, error: errorMut },
+  ] = useUpdateLessonStatusMutation();
+  const { data, error, loading, fetchMore } = useGetLessonQuery({
+    variables: { id },
+    fetchPolicy: "network-only",
+  });
+  React.useEffect(() => {
+    if (dataMut) fetchMore({});
+  }, [dataMut]);
+  const disableButton = data?.lesson.status === Enum_Lesson_Status["Check"];
+  const buttonText = disableButton
+    ? "Отправлено в редактуру"
+    : "Отправить в редактуру";
   return (
     <StyledPageWithHeader
       headerHeight="72px"
@@ -99,9 +158,10 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
             borderBottom="1px solid #F2F2F2"
             height="27px"
           >
-            <BackButton>
-              <Link href="/author">
-                <>
+            {" "}
+            <Link href="/author">
+              <BackButton>
+                <div>
                   <Icon
                     marginRight="10px"
                     aria-label="Settings"
@@ -109,13 +169,13 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
                     type="font-awesome"
                   />
                   Все уроки
-                </>
-              </Link>
-            </BackButton>
+                </div>
+              </BackButton>
+            </Link>
           </Flex>
           <TopNav paddingLeft="56px" minHeight="44px" height="44px">
             <TopNav.Section>
-              {LINKS.map((i) => (
+              {(isEditor ? LINKS_EDITOR : LINKS).map((i) => (
                 <TopNav.Item marginRight="32px">
                   <HeaderLink active={i.path === router.pathname}>
                     <Link href={getPath(i.path, id)}>{i.name}</Link>
@@ -123,15 +183,92 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
                 </TopNav.Item>
               ))}
             </TopNav.Section>
+            <TopNav.Section>
+              {isEditor ? (
+                <>
+                  <TopNav.Item>
+                    <Button marginRight="16px" size="small">
+                      Пригласить
+                    </Button>
+                  </TopNav.Item>
+                  {data?.lesson.status === Enum_Lesson_Status["Check"] && (
+                    <>
+                      {" "}
+                      <TopNav.Item>
+                        <Button
+                          onClick={() =>
+                            updateStatus({
+                              variables: {
+                                id,
+                                status: Enum_Lesson_Status["Fix"],
+                              },
+                            })
+                          }
+                          disabled={disableButton}
+                          marginRight="60px"
+                          size="small"
+                          palette="primary"
+                        >
+                          Вернуть автоору
+                        </Button>
+                      </TopNav.Item>
+                      <TopNav.Item>
+                        <Button
+                          onClick={() =>
+                            updateStatus({
+                              variables: {
+                                id,
+                                status: Enum_Lesson_Status["Complete"],
+                              },
+                            })
+                          }
+                          disabled={disableButton}
+                          marginRight="60px"
+                          size="small"
+                          palette="primary"
+                        >
+                          Завершить редактуру
+                        </Button>
+                      </TopNav.Item>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  <TopNav.Item>
+                    <Button marginRight="16px" size="small">
+                      Поделиться
+                    </Button>
+                  </TopNav.Item>
+                  <TopNav.Item>
+                    <Button
+                      onClick={() =>
+                        updateStatus({
+                          variables: {
+                            id,
+                            status: Enum_Lesson_Status["Check"],
+                          },
+                        })
+                      }
+                      disabled={disableButton}
+                      marginRight="60px"
+                      size="small"
+                      palette="primary"
+                    >
+                      {buttonText}
+                    </Button>
+                  </TopNav.Item>
+                </>
+              )}
+            </TopNav.Section>
           </TopNav>
         </Flex>
       }
       border="default"
     >
-        <Flex flexDirection="column" justifyContent="center" alignItems="center" >
+      <Flex flexDirection="column" justifyContent="center" alignItems="center">
         {children}
-        </Flex>
-      
+      </Flex>
     </StyledPageWithHeader>
   );
 };

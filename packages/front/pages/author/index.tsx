@@ -78,7 +78,7 @@ export default function CourseList() {
 			<StyledCars >
 				<Flex flexDirection="row" flexWrap="wrap">
 					{data.lessons.map((i) => (
-						<Link href={`/author/lesson/${i.id}`}>
+						<Link href={`/author/lesson/${i.id}/description`}>
 							<Box width="240px" 
 								height="196px" 
 								margin="23px" 
