@@ -1,10 +1,14 @@
-- name: multiple command
-  uses: appleboy/ssh-action@master
-  with:
-    host: ${{ secrets.HOST }}
-    username: ${{ secrets.USERNAME }}
-    key: ${{ secrets.KEY }}
-    port: ${{ secrets.PORT }}
-    script: |
-      cd /home/admin/sber/ && git pull
-      docker-compose down && docker-compose up -d
+name: upload to server
+on: [push]
+jobs:
+  upload:
+  - name: upload
+    uses: appleboy/ssh-action@master
+    with:
+      host: ${{ secrets.HOST }}
+      username: ${{ secrets.USERNAME }}
+      key: ${{ secrets.KEY }}
+      port: ${{ secrets.PORT }}
+      script: |
+        cd /home/admin/sber/ && git pull
+        docker-compose down && docker-compose up -d
