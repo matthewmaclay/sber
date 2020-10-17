@@ -23,8 +23,8 @@ mutation updateLessonContent($id: ID!, $content: String) {
   }
 }
 
-mutation updateLessonStatus($id: ID!, $status: String) {
-  updateLesson(input: { where: { id: $id }, data: { content: $status } }) {
+mutation updateLessonStatus($id: ID!, $status: ENUM_LESSON_STATUS) {
+  updateLesson(input: { where: { id: $id }, data: { status: $status } }) {
     lesson {
       id
     }
