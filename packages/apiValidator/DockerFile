@@ -1,9 +1,0 @@
-FROM node:14
-
-RUN npm i npm@latest -g
-
-COPY . .
-
-RUN npm i
-
-ENTRYPOINT [ "npm", "start" ]
