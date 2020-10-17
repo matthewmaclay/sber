@@ -34,9 +34,6 @@
     },
     "uniq": {
       "type": "json"
-    },
-    "prohibitedWords": {
-      "type": "json"
     }
   }
 }
