@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import LessonHeader from '../../src/components/lessonHeader/LessonHeader';
 
 import { Flex } from "bumbag";
 import { useGetLessonsQuery, Enum_Lesson_Status } from "graphqlTypes";
@@ -14,9 +15,10 @@ export default function CourseList() {
 	if (loading) return "загрузка";
 	return (
 		<Flex padding="major-2" flexBasis="30%" flexDirection="column">
-		{data.lessons.map((i) => (
-			<Link href={`/author/lesson/${i.id}`}>{i.title}</Link>
-		))}
+			<LessonHeader />
+			{data.lessons.map((i) => (
+				<Link href={`/author/lesson/${i.id}`}>{i.title}</Link>
+			))}
 		</Flex>
 	);
 }

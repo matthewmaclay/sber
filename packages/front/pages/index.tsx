@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const StyledCourseList = style.div`
 	display: flex;
-	height: 100%;
+	height: 100vh;
 `
 const StyledBlock = style.div`
 	display: flex;
