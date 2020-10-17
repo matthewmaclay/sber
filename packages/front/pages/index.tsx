@@ -50,11 +50,11 @@ const Block = ({ role }) => {
 const CourseList = () => {
   return (
 	  	<StyledCourseList>
-			<Link href="/author/index" as='/author/index'>
+			<Link href="/author/lesson" as='/author/lesson'>
 				<Block role="Я автор" />
 			</Link>
 			<StyledSplit />
-			<Link href="/pageTest/viewReports" as='/pageTest/viewReports'>
+			<Link href="/author/index" as='/author/index'>
 				<Block role="Я редактор" />
 			</Link>
 		</StyledCourseList>
