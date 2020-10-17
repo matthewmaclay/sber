@@ -20,6 +20,11 @@ const GlobalStyle = createGlobalStyle`
 		margin: 0px;
 		width: 100%;
 		height: 100%;
+	}
+	.hint{
+		background-color: #924FD1;
+		cursor: pointer;
+	}
 `;
 
 const theme = {
@@ -72,6 +77,7 @@ export default function App({ Component, pageProps }: Props) {
         <Head>
           <link rel="stylesheet" href="/css/medium-editor.css" />
           <link rel="stylesheet" href="/css/themes/bootstrap.css" />
+      
         </Head>
         <Component {...pageProps} />
         <GlobalStyle />
