@@ -128,7 +128,10 @@ const LessonHeader: React.FC<Props> = ({ children, id }) => {
       }
       border="default"
     >
-      {children}
+        <Flex flexDirection="column" justifyContent="center" alignItems="center" >
+        {children}
+        </Flex>
+      
     </StyledPageWithHeader>
   );
 };

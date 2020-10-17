@@ -17,7 +17,7 @@ export default function CourseList() {
 		<Flex padding="major-2" flexBasis="30%" flexDirection="column">
 			<LessonHeader />
 			{data.lessons.map((i) => (
-				<Link href={`/author/lesson/${i.id}`}>{i.title}</Link>
+				<Link href={`/author/lesson/${i.id}/description`}>{i.title}</Link>
 			))}
 		</Flex>
 	);
