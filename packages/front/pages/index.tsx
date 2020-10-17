@@ -14,11 +14,11 @@ useEffect(()=>{
   
 },[])
   return (
-    <Flex padding="major-2" flexBasis="30%" flexDirection="column">
-      <Flex padding="major-2" flexBasis="30%" flexDirection="column">
-        hello mambo jambo
-      </Flex>
-      <MediumEditor/>
-    </Flex>
-  );
+		<Flex padding="major-2" flexBasis="30%" flexDirection="column">
+			<Flex padding="major-2" flexBasis="30%" flexDirection="column">
+				hello mambo jambo
+			</Flex>
+			<MediumEditor/>
+		</Flex>
+  	);
 }
