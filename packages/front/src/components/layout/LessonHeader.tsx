@@ -86,7 +86,7 @@ const LINKS = [
   },
   {
     name: "Результат",
-    path: "/author/lesson/[id]/check",
+    path: "/author/lesson/[id]/result",
   },
 ];
 
@@ -117,7 +117,7 @@ const LINKS_EDITOR = [
   },
   {
     name: "Результат",
-    path: "/editor/lesson/[id]/check",
+    path: "/editor/lesson/[id]/result",
   },
 ];
 
@@ -203,10 +203,8 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                               },
                             })
                           }
-                     
                           marginRight="16px"
                           size="small"
-                        
                         >
                           Вернуть автору
                         </Button>
@@ -221,7 +219,6 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                               },
                             })
                           }
-                      
                           marginRight="60px"
                           size="small"
                           palette="primary"
@@ -237,6 +234,34 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                   <TopNav.Item>
                     <Button marginRight="16px" size="small">
                       Поделиться
+                    </Button>
+                  </TopNav.Item>
+                  <TopNav.Item>
+                    <Button
+                      onClick={() => {
+                        fetch("https://digitalscale.dokub.xyz/api/checkUnic", {
+                          method: "POST",
+                          data: JSON.stringify({ id }),
+                        });
+                        fetch(
+                          "https://digitalscale.dokub.xyz/api/textReadability",
+                          {
+                            method: "POST",
+                            data: JSON.stringify({ id }),
+                          }
+                        );
+                        fetch(
+                          "https://digitalscale.dokub.xyz/api/textPlagiat",
+                          {
+                            method: "POST",
+                            data: JSON.stringify({ id }),
+                          }
+                        );
+                      }}
+                      marginRight="16px"
+                      size="small"
+                    >
+                      Запустить автопроверку
                     </Button>
                   </TopNav.Item>
                   <TopNav.Item>

@@ -1823,7 +1823,7 @@ export type GetLessonQuery = (
   { __typename?: 'Query' }
   & { lesson?: Maybe<(
     { __typename?: 'Lesson' }
-    & Pick<Lesson, 'status' | 'content' | 'title'>
+    & Pick<Lesson, 'status' | 'content' | 'title' | 'uniq' | 'readability' | 'links'>
     & { comments?: Maybe<Array<Maybe<(
       { __typename?: 'Comment' }
       & Pick<Comment, 'content' | 'topOffset' | 'leftOffset'>
@@ -1949,6 +1949,9 @@ export const GetLessonDocument = gql`
       content
       leftOffset
     }
+    uniq
+    readability
+    links
   }
 }
     `;
