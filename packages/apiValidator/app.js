@@ -24,18 +24,21 @@ app.get('/', (req, res) => {
 app.post('/checkUnic', async (req, res) => {
     try{
         const result = await testLinks(req.body.id);
-        const addLinks = {
-            links: {
-                result
-            }
-        };
-        const requestOptionsForPut = {
-            method: 'PUT',
-            body: JSON.stringify(addLinks)
-        };
-        const status = await fetch(`https://admin.digitalscale.dokub.xyz/lessons/${req.body.id}`, requestOptionsForPut)
-            .then(respons => {return respons.status } );
-        res.status(status).send("OK")
+        if(result !== null) {
+            const addLinks = {
+                links: {
+                    result
+                }
+            };
+            const requestOptionsForPut = {
+                method: 'PUT',
+                body: JSON.stringify(addLinks)
+            };
+            const status = await fetch(`https://admin.digitalscale.dokub.xyz/lessons/${req.body.id}`, requestOptionsForPut)
+                .then(respons => {return respons.status } );
+            res.status(status).send("OK")
+        }
+        res.status(500).send("Null")
     } catch(e) {
         console.log(e)
         res.status(500).send(e)
