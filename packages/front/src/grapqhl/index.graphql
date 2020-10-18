@@ -15,11 +15,12 @@ query getLesson($id: ID!) {
     comments {
       content
       topOffset
-
       content
-
       leftOffset
     }
+    uniq
+    readability
+    links
   }
 }
 

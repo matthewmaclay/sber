@@ -12,7 +12,7 @@ import {
 import PageWithHeader from "components/layout/withHeader";
 import LessonHeader from "components/layout/LessonHeader";
 import { LessonComponenProps } from "./Check";
-import Comments from "../comments";
+import Comments from "components/Comments";
 import CustomStyleForEditor from "components/CustomStyleForEditor";
 
 const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
