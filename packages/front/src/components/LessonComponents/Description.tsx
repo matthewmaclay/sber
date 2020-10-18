@@ -12,6 +12,8 @@ import {
 import PageWithHeader from "components/layout/withHeader";
 import LessonHeader from "components/layout/LessonHeader";
 import { LessonComponenProps } from "./Check";
+import Comments from "../comments";
+import CustomStyleForEditor from "components/CustomStyleForEditor";
 
 const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
   const {
@@ -41,6 +43,7 @@ const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
   };
   return (
     <LessonHeader {...props} id={id}>
+      <Comments comments={data.lesson.comments} />
       <Heading
         cursor="default"
         marginTop="68px"
@@ -50,9 +53,14 @@ const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
       >
         {data.lesson.title}
       </Heading>
-      <Flex padding="major-2" flexBasis="30%" flexDirection="column">
-        <Editor onChange={handleChange} initialContent={data.lesson.content} />
-      </Flex>
+      <CustomStyleForEditor>
+        <Flex padding="major-2" flexBasis="30%" flexDirection="column">
+          <Editor
+            onChange={handleChange}
+            initialContent={data.lesson.content}
+          />
+        </Flex>
+      </CustomStyleForEditor>
     </LessonHeader>
   );
 };

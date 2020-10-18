@@ -31,6 +31,9 @@ export type Query = {
   lesson?: Maybe<Lesson>;
   lessons?: Maybe<Array<Maybe<Lesson>>>;
   lessonsConnection?: Maybe<LessonConnection>;
+  prohibitedWord?: Maybe<ProhibitedWord>;
+  prohibitedWords?: Maybe<Array<Maybe<ProhibitedWord>>>;
+  prohibitedWordsConnection?: Maybe<ProhibitedWordConnection>;
   project?: Maybe<Project>;
   projects?: Maybe<Array<Maybe<Project>>>;
   projectsConnection?: Maybe<ProjectConnection>;
@@ -85,6 +88,27 @@ export type QueryLessonsArgs = {
 
 
 export type QueryLessonsConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryProhibitedWordArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryProhibitedWordsArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryProhibitedWordsConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -200,6 +224,7 @@ export type Comment = {
   messages?: Maybe<Array<Maybe<ComponentNewMessage>>>;
   content?: Maybe<Scalars['String']>;
   lesson?: Maybe<Lesson>;
+  leftOffset?: Maybe<Scalars['Int']>;
   created_by?: Maybe<AdminUser>;
   updated_by?: Maybe<AdminUser>;
 };
@@ -222,6 +247,8 @@ export type Lesson = {
   status?: Maybe<Enum_Lesson_Status>;
   time?: Maybe<Scalars['String']>;
   uniq?: Maybe<Scalars['JSON']>;
+  readability?: Maybe<Scalars['JSON']>;
+  links?: Maybe<Scalars['JSON']>;
   created_by?: Maybe<AdminUser>;
   updated_by?: Maybe<AdminUser>;
   comments?: Maybe<Array<Maybe<Comment>>>;
@@ -264,6 +291,7 @@ export type CommentGroupBy = {
   topOffset?: Maybe<Array<Maybe<CommentConnectionTopOffset>>>;
   content?: Maybe<Array<Maybe<CommentConnectionContent>>>;
   lesson?: Maybe<Array<Maybe<CommentConnectionLesson>>>;
+  leftOffset?: Maybe<Array<Maybe<CommentConnectionLeftOffset>>>;
   created_by?: Maybe<Array<Maybe<CommentConnectionCreated_By>>>;
   updated_by?: Maybe<Array<Maybe<CommentConnectionUpdated_By>>>;
 };
@@ -304,6 +332,12 @@ export type CommentConnectionLesson = {
   connection?: Maybe<CommentConnection>;
 };
 
+export type CommentConnectionLeftOffset = {
+  __typename?: 'CommentConnectionLeftOffset';
+  key?: Maybe<Scalars['Int']>;
+  connection?: Maybe<CommentConnection>;
+};
+
 export type CommentConnectionCreated_By = {
   __typename?: 'CommentConnectionCreated_by';
   key?: Maybe<Scalars['ID']>;
@@ -329,21 +363,25 @@ export type CommentAggregator = {
 export type CommentAggregatorSum = {
   __typename?: 'CommentAggregatorSum';
   topOffset?: Maybe<Scalars['Float']>;
+  leftOffset?: Maybe<Scalars['Float']>;
 };
 
 export type CommentAggregatorAvg = {
   __typename?: 'CommentAggregatorAvg';
   topOffset?: Maybe<Scalars['Float']>;
+  leftOffset?: Maybe<Scalars['Float']>;
 };
 
 export type CommentAggregatorMin = {
   __typename?: 'CommentAggregatorMin';
   topOffset?: Maybe<Scalars['Float']>;
+  leftOffset?: Maybe<Scalars['Float']>;
 };
 
 export type CommentAggregatorMax = {
   __typename?: 'CommentAggregatorMax';
   topOffset?: Maybe<Scalars['Float']>;
+  leftOffset?: Maybe<Scalars['Float']>;
 };
 
 export type LessonConnection = {
@@ -363,6 +401,8 @@ export type LessonGroupBy = {
   status?: Maybe<Array<Maybe<LessonConnectionStatus>>>;
   time?: Maybe<Array<Maybe<LessonConnectionTime>>>;
   uniq?: Maybe<Array<Maybe<LessonConnectionUniq>>>;
+  readability?: Maybe<Array<Maybe<LessonConnectionReadability>>>;
+  links?: Maybe<Array<Maybe<LessonConnectionLinks>>>;
   created_by?: Maybe<Array<Maybe<LessonConnectionCreated_By>>>;
   updated_by?: Maybe<Array<Maybe<LessonConnectionUpdated_By>>>;
 };
@@ -415,6 +455,18 @@ export type LessonConnectionUniq = {
   connection?: Maybe<LessonConnection>;
 };
 
+export type LessonConnectionReadability = {
+  __typename?: 'LessonConnectionReadability';
+  key?: Maybe<Scalars['JSON']>;
+  connection?: Maybe<LessonConnection>;
+};
+
+export type LessonConnectionLinks = {
+  __typename?: 'LessonConnectionLinks';
+  key?: Maybe<Scalars['JSON']>;
+  connection?: Maybe<LessonConnection>;
+};
+
 export type LessonConnectionCreated_By = {
   __typename?: 'LessonConnectionCreated_by';
   key?: Maybe<Scalars['ID']>;
@@ -429,6 +481,75 @@ export type LessonConnectionUpdated_By = {
 
 export type LessonAggregator = {
   __typename?: 'LessonAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ProhibitedWord = {
+  __typename?: 'ProhibitedWord';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  word?: Maybe<Scalars['String']>;
+  created_by?: Maybe<AdminUser>;
+  updated_by?: Maybe<AdminUser>;
+};
+
+export type ProhibitedWordConnection = {
+  __typename?: 'ProhibitedWordConnection';
+  values?: Maybe<Array<Maybe<ProhibitedWord>>>;
+  groupBy?: Maybe<ProhibitedWordGroupBy>;
+  aggregate?: Maybe<ProhibitedWordAggregator>;
+};
+
+export type ProhibitedWordGroupBy = {
+  __typename?: 'ProhibitedWordGroupBy';
+  id?: Maybe<Array<Maybe<ProhibitedWordConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<ProhibitedWordConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<ProhibitedWordConnectionUpdated_At>>>;
+  word?: Maybe<Array<Maybe<ProhibitedWordConnectionWord>>>;
+  created_by?: Maybe<Array<Maybe<ProhibitedWordConnectionCreated_By>>>;
+  updated_by?: Maybe<Array<Maybe<ProhibitedWordConnectionUpdated_By>>>;
+};
+
+export type ProhibitedWordConnectionId = {
+  __typename?: 'ProhibitedWordConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<ProhibitedWordConnection>;
+};
+
+export type ProhibitedWordConnectionCreated_At = {
+  __typename?: 'ProhibitedWordConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<ProhibitedWordConnection>;
+};
+
+export type ProhibitedWordConnectionUpdated_At = {
+  __typename?: 'ProhibitedWordConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<ProhibitedWordConnection>;
+};
+
+export type ProhibitedWordConnectionWord = {
+  __typename?: 'ProhibitedWordConnectionWord';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<ProhibitedWordConnection>;
+};
+
+export type ProhibitedWordConnectionCreated_By = {
+  __typename?: 'ProhibitedWordConnectionCreated_by';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<ProhibitedWordConnection>;
+};
+
+export type ProhibitedWordConnectionUpdated_By = {
+  __typename?: 'ProhibitedWordConnectionUpdated_by';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<ProhibitedWordConnection>;
+};
+
+export type ProhibitedWordAggregator = {
+  __typename?: 'ProhibitedWordAggregator';
   count?: Maybe<Scalars['Int']>;
   totalCount?: Maybe<Scalars['Int']>;
 };
@@ -627,7 +748,7 @@ export type UploadFileRelatedArgs = {
   where?: Maybe<Scalars['JSON']>;
 };
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Comment | CommentConnection | CommentAggregator | CommentAggregatorSum | CommentAggregatorAvg | CommentAggregatorMin | CommentAggregatorMax | CommentGroupBy | CommentConnectionId | CommentConnectionCreated_At | CommentConnectionUpdated_At | CommentConnectionTopOffset | CommentConnectionContent | CommentConnectionLesson | CommentConnectionCreated_By | CommentConnectionUpdated_By | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Lesson | LessonConnection | LessonAggregator | LessonGroupBy | LessonConnectionId | LessonConnectionCreated_At | LessonConnectionUpdated_At | LessonConnectionTitle | LessonConnectionContent | LessonConnectionStatus | LessonConnectionTime | LessonConnectionUniq | LessonConnectionCreated_By | LessonConnectionUpdated_By | CreateLessonPayload | UpdateLessonPayload | DeleteLessonPayload | Project | ProjectConnection | ProjectAggregator | ProjectGroupBy | ProjectConnectionId | ProjectConnectionCreated_At | ProjectConnectionUpdated_At | ProjectConnectionName | ProjectConnectionCreated_By | ProjectConnectionUpdated_By | CreateProjectPayload | UpdateProjectPayload | DeleteProjectPayload | Stage | StageConnection | StageAggregator | StageGroupBy | StageConnectionId | StageConnectionCreated_At | StageConnectionUpdated_At | StageConnectionNumber | StageConnectionProject | StageConnectionCreated_By | StageConnectionUpdated_By | CreateStagePayload | UpdateStagePayload | DeleteStagePayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionCreated_By | UploadFileConnectionUpdated_By | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_By | UsersPermissionsRoleConnectionUpdated_By | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_By | UsersPermissionsUserConnectionUpdated_By | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentNewMessage | ComponentNewMetrics;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Comment | CommentConnection | CommentAggregator | CommentAggregatorSum | CommentAggregatorAvg | CommentAggregatorMin | CommentAggregatorMax | CommentGroupBy | CommentConnectionId | CommentConnectionCreated_At | CommentConnectionUpdated_At | CommentConnectionTopOffset | CommentConnectionContent | CommentConnectionLesson | CommentConnectionLeftOffset | CommentConnectionCreated_By | CommentConnectionUpdated_By | CreateCommentPayload | UpdateCommentPayload | DeleteCommentPayload | Lesson | LessonConnection | LessonAggregator | LessonGroupBy | LessonConnectionId | LessonConnectionCreated_At | LessonConnectionUpdated_At | LessonConnectionTitle | LessonConnectionContent | LessonConnectionStatus | LessonConnectionTime | LessonConnectionUniq | LessonConnectionReadability | LessonConnectionLinks | LessonConnectionCreated_By | LessonConnectionUpdated_By | CreateLessonPayload | UpdateLessonPayload | DeleteLessonPayload | ProhibitedWord | ProhibitedWordConnection | ProhibitedWordAggregator | ProhibitedWordGroupBy | ProhibitedWordConnectionId | ProhibitedWordConnectionCreated_At | ProhibitedWordConnectionUpdated_At | ProhibitedWordConnectionWord | ProhibitedWordConnectionCreated_By | ProhibitedWordConnectionUpdated_By | CreateProhibitedWordPayload | UpdateProhibitedWordPayload | DeleteProhibitedWordPayload | Project | ProjectConnection | ProjectAggregator | ProjectGroupBy | ProjectConnectionId | ProjectConnectionCreated_At | ProjectConnectionUpdated_At | ProjectConnectionName | ProjectConnectionCreated_By | ProjectConnectionUpdated_By | CreateProjectPayload | UpdateProjectPayload | DeleteProjectPayload | Stage | StageConnection | StageAggregator | StageGroupBy | StageConnectionId | StageConnectionCreated_At | StageConnectionUpdated_At | StageConnectionNumber | StageConnectionProject | StageConnectionCreated_By | StageConnectionUpdated_By | CreateStagePayload | UpdateStagePayload | DeleteStagePayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionCreated_By | UploadFileConnectionUpdated_By | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_By | UsersPermissionsRoleConnectionUpdated_By | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_By | UsersPermissionsUserConnectionUpdated_By | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentNewLinks | ComponentNewMessage | ComponentNewMetrics;
 
 export type UsersPermissionsMe = {
   __typename?: 'UsersPermissionsMe';
@@ -686,6 +807,21 @@ export type UpdateLessonPayload = {
 export type DeleteLessonPayload = {
   __typename?: 'deleteLessonPayload';
   lesson?: Maybe<Lesson>;
+};
+
+export type CreateProhibitedWordPayload = {
+  __typename?: 'createProhibitedWordPayload';
+  prohibitedWord?: Maybe<ProhibitedWord>;
+};
+
+export type UpdateProhibitedWordPayload = {
+  __typename?: 'updateProhibitedWordPayload';
+  prohibitedWord?: Maybe<ProhibitedWord>;
+};
+
+export type DeleteProhibitedWordPayload = {
+  __typename?: 'deleteProhibitedWordPayload';
+  prohibitedWord?: Maybe<ProhibitedWord>;
 };
 
 export type CreateProjectPayload = {
@@ -1139,6 +1275,12 @@ export type DeleteUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type ComponentNewLinks = {
+  __typename?: 'ComponentNewLinks';
+  id: Scalars['ID'];
+  url?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createComment?: Maybe<CreateCommentPayload>;
@@ -1147,6 +1289,9 @@ export type Mutation = {
   createLesson?: Maybe<CreateLessonPayload>;
   updateLesson?: Maybe<UpdateLessonPayload>;
   deleteLesson?: Maybe<DeleteLessonPayload>;
+  createProhibitedWord?: Maybe<CreateProhibitedWordPayload>;
+  updateProhibitedWord?: Maybe<UpdateProhibitedWordPayload>;
+  deleteProhibitedWord?: Maybe<DeleteProhibitedWordPayload>;
   createProject?: Maybe<CreateProjectPayload>;
   updateProject?: Maybe<UpdateProjectPayload>;
   deleteProject?: Maybe<DeleteProjectPayload>;
@@ -1203,6 +1348,21 @@ export type MutationUpdateLessonArgs = {
 
 export type MutationDeleteLessonArgs = {
   input?: Maybe<DeleteLessonInput>;
+};
+
+
+export type MutationCreateProhibitedWordArgs = {
+  input?: Maybe<CreateProhibitedWordInput>;
+};
+
+
+export type MutationUpdateProhibitedWordArgs = {
+  input?: Maybe<UpdateProhibitedWordInput>;
+};
+
+
+export type MutationDeleteProhibitedWordArgs = {
+  input?: Maybe<DeleteProhibitedWordInput>;
 };
 
 
@@ -1325,6 +1485,7 @@ export type CommentInput = {
   messages?: Maybe<Array<Maybe<ComponentNewMessageInput>>>;
   content?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
+  leftOffset?: Maybe<Scalars['Int']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1348,6 +1509,7 @@ export type EditCommentInput = {
   messages?: Maybe<Array<Maybe<EditComponentNewMessageInput>>>;
   content?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
+  leftOffset?: Maybe<Scalars['Int']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1373,6 +1535,8 @@ export type LessonInput = {
   status?: Maybe<Enum_Lesson_Status>;
   time?: Maybe<Scalars['String']>;
   uniq?: Maybe<Scalars['JSON']>;
+  readability?: Maybe<Scalars['JSON']>;
+  links?: Maybe<Scalars['JSON']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1389,11 +1553,38 @@ export type EditLessonInput = {
   status?: Maybe<Enum_Lesson_Status>;
   time?: Maybe<Scalars['String']>;
   uniq?: Maybe<Scalars['JSON']>;
+  readability?: Maybe<Scalars['JSON']>;
+  links?: Maybe<Scalars['JSON']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
 
 export type DeleteLessonInput = {
+  where?: Maybe<InputId>;
+};
+
+export type CreateProhibitedWordInput = {
+  data?: Maybe<ProhibitedWordInput>;
+};
+
+export type ProhibitedWordInput = {
+  word?: Maybe<Scalars['String']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type UpdateProhibitedWordInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditProhibitedWordInput>;
+};
+
+export type EditProhibitedWordInput = {
+  word?: Maybe<Scalars['String']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type DeleteProhibitedWordInput = {
   where?: Maybe<InputId>;
 };
 
@@ -1593,6 +1784,15 @@ export type EditFileInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type ComponentNewLinkInput = {
+  url?: Maybe<Scalars['String']>;
+};
+
+export type EditComponentNewLinkInput = {
+  id?: Maybe<Scalars['ID']>;
+  url?: Maybe<Scalars['String']>;
+};
+
 
 
 
@@ -1624,6 +1824,10 @@ export type GetLessonQuery = (
   & { lesson?: Maybe<(
     { __typename?: 'Lesson' }
     & Pick<Lesson, 'status' | 'content' | 'title'>
+    & { comments?: Maybe<Array<Maybe<(
+      { __typename?: 'Comment' }
+      & Pick<Comment, 'content' | 'topOffset' | 'leftOffset'>
+    )>>> }
   )> }
 );
 
@@ -1677,6 +1881,25 @@ export type CreateLessonMutation = (
   )> }
 );
 
+export type CreateCommentMutationVariables = Exact<{
+  content?: Maybe<Scalars['String']>;
+  topOffset?: Maybe<Scalars['Int']>;
+  leftOffset?: Maybe<Scalars['Int']>;
+  lesson: Scalars['ID'];
+}>;
+
+
+export type CreateCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { createComment?: Maybe<(
+    { __typename?: 'createCommentPayload' }
+    & { comment?: Maybe<(
+      { __typename?: 'Comment' }
+      & Pick<Comment, 'id'>
+    )> }
+  )> }
+);
+
 
 export const GetLessonsDocument = gql`
     query getLessons($status: ENUM_LESSON_STATUS) {
@@ -1720,6 +1943,12 @@ export const GetLessonDocument = gql`
     status
     content
     title
+    comments {
+      content
+      topOffset
+      content
+      leftOffset
+    }
   }
 }
     `;
@@ -1853,3 +2082,40 @@ export function useCreateLessonMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateLessonMutationHookResult = ReturnType<typeof useCreateLessonMutation>;
 export type CreateLessonMutationResult = Apollo.MutationResult<CreateLessonMutation>;
 export type CreateLessonMutationOptions = Apollo.BaseMutationOptions<CreateLessonMutation, CreateLessonMutationVariables>;
+export const CreateCommentDocument = gql`
+    mutation createComment($content: String, $topOffset: Int, $leftOffset: Int, $lesson: ID!) {
+  createComment(input: {data: {content: $content, topOffset: $topOffset, leftOffset: $leftOffset, lesson: $lesson}}) {
+    comment {
+      id
+    }
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *      topOffset: // value for 'topOffset'
+ *      leftOffset: // value for 'leftOffset'
+ *      lesson: // value for 'lesson'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, baseOptions);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
