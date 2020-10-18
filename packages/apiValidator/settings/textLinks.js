@@ -11,7 +11,8 @@ export default async function testLinks(id) {
 
    const getLinks = getUrls(result);
    const arrayLinks = [];
-   getLinks.forEach(item => {
+   if(arrayLinks.length > 0) {
+    getLinks.forEach(item => {
         arrayLinks.push(item)
    })
 
@@ -30,4 +31,5 @@ export default async function testLinks(id) {
         }))
     });
     return Promise.all(promise).then(res => {return res})
+   }
 }
