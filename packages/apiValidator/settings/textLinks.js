@@ -32,6 +32,6 @@ export default async function testLinks(id) {
                 return Promise.all(promise).then(res => {return res})
         }
    } else {
-       return 
+       return null
    }
 }
