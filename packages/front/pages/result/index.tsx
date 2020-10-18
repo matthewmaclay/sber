@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from 'styled-components';
 import { Button } from 'bumbag';
 
@@ -72,6 +72,7 @@ const StyledStopWords = style.div`
 `
 
 const StyledReplace = style.div`
+    position: relative;
     height: 1px;
     width: 40%;
     background: #E0E0E0;
@@ -79,6 +80,7 @@ const StyledReplace = style.div`
 `
 
 const StyledReplaceToo = style.div`
+    position: relative;
     height: 1px;
     width: 40%;
     background: #E0E0E0;
@@ -144,11 +146,127 @@ const StyledTasks = style.div`
     }
 `
 
+const StyledFieldUnic = style.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 71px;
+    height: 27px;
+    width: 40%;
+
+    .mainInfo {
+        display: flex;
+        justify-content: space-between;
+    }
+    .text {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 27px;
+        color: #000000;
+    }
+
+    .persent {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 36px;
+        color: #E19F41;
+    }
+
+    .moreInfo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 23px 0px 21px 0px;
+        margin-top: 48px;
+
+        background: rgba(0, 111, 255, 0.1);
+        border: 1px solid rgba(0, 111, 255, 0.4);
+        border-radius: 4px;
+    }
+
+    .link {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    .borrowing {
+        margin: 0px 26px 0px 2px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #27AE60;
+    }
+`
+
+const StyledValidLinks = style.div`
+    display: flex;
+    flex-direction: column;
+    align-content: start;
+    justify-content: start;
+    margin-top: 59px;
+    width: 40%;
+
+    .text {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 27px;
+        color: rgba(200, 50, 39, 0.7);
+    }
+
+    button {
+        margin-top: 23px;
+    }
+
+    .topic {
+        margin-top: 23px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 18px;
+        color: #000000;
+    }
+
+    .notValidLinks{
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        height: 117px;
+        background: rgba(146, 79, 209, 0.1);
+        border-radius: 4px;
+    }
+
+    .link {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #924FD1
+    }
+`
+
 const StyledButtonSend = style.div`
     margin-top: 48px;
     background: #5454E2;
     border-radius: 4px;
 `
+
 
 const Percent = ({ persent }) => {
     return(
@@ -195,11 +313,69 @@ const Tasks = ({ status }) => {
     )
 }
 
+const FieldUnic = ({ unic }) => {
+    const [open, setOpen] = useState(false);
+
+    function handleClick() {
+        if(open) {
+            setOpen(false)
+        }else {
+            setOpen(true)
+        }
+    }
+
+    return(
+        <StyledFieldUnic>
+            <div className="mainInfo">
+                <div className="text">Уникальность текста</div>
+                <div className="persent">{`${unic.uniqueness}%`}</div>
+            </div>
+            <Button width="102px" size="small" onClick={handleClick}>Открыть</Button>
+            {unic.coincidences.length > 0 && open && unic.coincidences.map(item => (
+                <div className='moreInfo'>
+                    <div className="borrowing">{item.percent}%</div>
+                    <div className="link">{item.url}</div>
+                </div>
+            ))}
+        </StyledFieldUnic>
+    )
+}
+
 const ButtonSend = () => {
     return(
         <StyledButtonSend>
             <Button palette="primary">Отправить редактору</Button>
         </StyledButtonSend>
+    )
+}
+
+const ValidLinks = ( { links }) => {
+    const [open, setOpen] = useState(false);
+
+    function handleClick() {
+        if(open) {
+            setOpen(false)
+        }else {
+            setOpen(true)
+        }
+    }
+
+    return (
+        <StyledValidLinks >
+            <div className='text'>Ссылки проверены</div>
+            <Button width="102px" size="small" onClick={handleClick}>Открыть</Button>
+            <div className="topic">{`Найдено ${links.result.length} подозрительных ссылки`}</div>
+            {links.result.length > 0 && open && links.result.map((item, i) => {
+                const link: string = Object.keys(item)[0];
+                const words = item[link].join(', ');
+                return (
+                    <div key={i} className="notValidLinks">
+                        <div className="link">{link}</div>
+                        <div className="words">{words}</div>
+                    </div>
+                )})
+            }
+        </StyledValidLinks>
     )
 }
 
@@ -229,13 +405,41 @@ const mock = {
     },
     questionnaire: {
         status: true,
-        head: 'Автоматические теги',
+        head: 'Цели проставлены',
         text: 'Кулинария, рецепт, приготовление, обучение'
     },
     tags: {
         status: true,
         head: 'Ссылки проверены',
         text: null
+    },
+    unic: {
+        "uniqueness": "9.9",
+        "coincidences": [
+            {
+            "url": "https://pets.mail.ru/how-to/uhod-za-sherstyu-malenkih-pushistyih-sobak-toj-pud/",
+            "percent": "90.1",
+            "highlight": [
+                [
+                "0",
+                "84"
+                ],
+                [
+                "86",
+                "159"
+                ]
+            ]
+            }
+        ]
+    },
+    links: {
+        "result": [
+          {
+            "https://pets.mail.ru/how-to/uhod-za-sherstyu-malenkih-pushistyih-sobak-toj-pud?from=smartlenta": [
+              "терьеров"
+            ]
+          }
+        ]
     }
 }
 
@@ -244,15 +448,16 @@ const ResultPage = () => {
             <StyledResultPage>
                 <StyledHeaders>Общая проверка материала</StyledHeaders>
                 <Percent persent={mock.persent.number} />
-                <FieldStopWords stopWords={mock.stopWords} />
                 <StyledReplace />
                 <Readability status={mock.readability.status}/>
+                <StyledReplaceToo />
+                <FieldUnic unic={mock.unic}/>
                 <StyledReplaceToo />
                 <Tasks status={mock.purposes} />
                 <StyledReplaceToo />
                 <Tasks status={mock.questionnaire} />
                 <StyledReplaceToo />
-                <Tasks status={mock.tags} />
+                <ValidLinks links={mock.links} />
                 <StyledReplaceToo />
                 <ButtonSend />
             </StyledResultPage>
