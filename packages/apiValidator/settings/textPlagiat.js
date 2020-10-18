@@ -12,7 +12,7 @@ export default async function textPlagiat(id) {
     });
 
     const form = new FormData();
-    form.append("key", "WTiYXkHwDlmsLck");
+    form.append("key", "eCqRMHBqyp5IwBm");
     form.append("text", testingText);
 
     const requestOptions = {
