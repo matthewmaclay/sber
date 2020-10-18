@@ -151,7 +151,6 @@ const StyledFieldUnic = style.div`
     flex-direction: column;
     justify-content: space-between;
     margin-top: 71px;
-    height: 27px;
     width: 40%;
 
     .mainInfo {
@@ -331,8 +330,8 @@ const FieldUnic = ({ unic }) => {
                 <div className="persent">{`${unic.uniqueness}%`}</div>
             </div>
             <Button width="102px" size="small" onClick={handleClick}>Открыть</Button>
-            {unic.coincidences.length > 0 && open && unic.coincidences.map(item => (
-                <div className='moreInfo'>
+            {unic.coincidences.length > 0 && open && unic.coincidences.map((item, i) => (
+                <div key={i} className='moreInfo'>
                     <div className="borrowing">{item.percent}%</div>
                     <div className="link">{item.url}</div>
                 </div>
