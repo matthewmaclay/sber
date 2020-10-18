@@ -4,7 +4,7 @@ import { Button, Flex, Heading } from "bumbag";
 import LessonHeader from "components/layout/LessonHeader";
 import { useRouter } from "next/router";
 import { useGetLessonQuery } from "graphqlTypes";
-import { Spinner } from "bumbag";
+import { Spinner, Table } from "bumbag";
 
 const StyledResultPage = style.div`
     display: flex;
@@ -290,12 +290,49 @@ const FieldStopWords = ({ stopWords }) => {
   );
 };
 
-const Readability = ({ status }) => {
+const Readability = (props) => {
+  console.log(props);
+  debugger;
   return (
-    <StyledReadability>
-      <div className="text">Читабельность</div>
-      <div className="status">{status}</div>
-    </StyledReadability>
+    <>
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeadCell>Name</Table.HeadCell>
+            <Table.HeadCell textAlign="right">Quantity</Table.HeadCell>
+            <Table.HeadCell textAlign="right">Price</Table.HeadCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>Nike</Table.Cell>
+            <Table.Cell textAlign="right">3</Table.Cell>
+            <Table.Cell textAlign="right">$9.00</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Adidas</Table.Cell>
+            <Table.Cell textAlign="right">4</Table.Cell>
+            <Table.Cell textAlign="right">$12.00</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>North Face</Table.Cell>
+            <Table.Cell textAlign="right">5</Table.Cell>
+            <Table.Cell textAlign="right">$15.00</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+        <Table.Foot fontWeight="semibold">
+          <Table.Row>
+            <Table.Cell>Total</Table.Cell>
+            <Table.Cell />
+            <Table.Cell textAlign="right">$36.00</Table.Cell>
+          </Table.Row>
+        </Table.Foot>
+      </Table>
+      <StyledReadability>
+        <div className="text">Читабельность</div>
+        <div className="status">{status}</div>
+      </StyledReadability>
+    </>
   );
 };
 
@@ -482,7 +519,7 @@ const ResultPage = () => {
   if (!data?.lesson.uniq)
     return (
       <LessonHeader id={id}>
-        <Heading use="h5" >
+        <Heading use="h5">
           Для просмотра данный страницы запросите автоматическую проверку статьи
         </Heading>
         <Spinner size="large" />
@@ -495,15 +532,17 @@ const ResultPage = () => {
         <StyledHeaders>Общая проверка материала</StyledHeaders>
         <Percent persent={mock.persent.number} />
         <StyledReplace />
-        <Readability status={mock.readability.status} />
+        {data?.lesson?.readability && (
+          <Readability {...data.lesson.readability} />
+        )}
         <StyledReplaceToo />
-        <FieldUnic unic={data.lesson.uniq} />
+        {data.lesson.uniq && <FieldUnic unic={data.lesson.uniq} />}
         <StyledReplaceToo />
         <Tasks status={mock.purposes} />
         <StyledReplaceToo />
         <Tasks status={mock.questionnaire} />
         <StyledReplaceToo />
-        <ValidLinks links={data.lesson.links} />
+        {data.lesson.links && <ValidLinks links={data.lesson.links} />}
         <StyledReplaceToo />
         <ButtonSend />
       </StyledResultPage>

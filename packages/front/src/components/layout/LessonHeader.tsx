@@ -84,10 +84,10 @@ const LINKS = [
     name: "Авторедактура",
     path: "/author/lesson/[id]/check",
   },
-  {
-    name: "Результат",
-    path: "/author/lesson/[id]/result",
-  },
+  // {
+  //   name: "Результат",
+  //   path: "/author/lesson/[id]/result",
+  // },
 ];
 
 const LINKS_EDITOR = [
@@ -115,10 +115,10 @@ const LINKS_EDITOR = [
     name: "Авторедактура",
     path: "/editor/lesson/[id]/check",
   },
-  {
-    name: "Результат",
-    path: "/editor/lesson/[id]/result",
-  },
+  // {
+  //   name: "Результат",
+  //   path: "/editor/lesson/[id]/result",
+  // },
 ];
 
 interface Props {
@@ -239,13 +239,20 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                   <TopNav.Item>
                     <Button
                       onClick={() => {
+                        debugger
                         fetch("https://digitalscale.dokub.xyz/api/checkUnic", {
                           method: "POST",
-                          data: JSON.stringify({ id }),
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          data: JSON.stringify({ id:id }),
                         });
                         fetch(
                           "https://digitalscale.dokub.xyz/api/textReadability",
                           {
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
                             method: "POST",
                             data: JSON.stringify({ id }),
                           }
@@ -253,6 +260,9 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                         fetch(
                           "https://digitalscale.dokub.xyz/api/textPlagiat",
                           {
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
                             method: "POST",
                             data: JSON.stringify({ id }),
                           }
