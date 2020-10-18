@@ -129,7 +129,6 @@ interface Props {
 const getPath = (path: string, id: string) => path.replace("[id]", id);
 const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
   const router = useRouter();
-  debugger
   const [
     updateStatus,
     { data: dataMut, loading: loadingMut, error: errorMut },
@@ -204,12 +203,12 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                               },
                             })
                           }
-                          disabled={disableButton}
-                          marginRight="60px"
+                     
+                          marginRight="16px"
                           size="small"
-                          palette="primary"
+                        
                         >
-                          Вернуть автоору
+                          Вернуть автору
                         </Button>
                       </TopNav.Item>
                       <TopNav.Item>
@@ -222,7 +221,7 @@ const LessonHeader: React.FC<Props> = ({ children, id, isEditor }) => {
                               },
                             })
                           }
-                          disabled={disableButton}
+                      
                           marginRight="60px"
                           size="small"
                           palette="primary"

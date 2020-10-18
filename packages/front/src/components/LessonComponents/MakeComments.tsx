@@ -1,22 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { Spinner } from "bumbag";
+import { Button, Card, Input, Modal, Spinner, styled } from "bumbag";
 import { useRouter } from "next/router";
 import Editor from "components/Editor";
 
-import { Box, Flex, Heading } from "bumbag";
+import { Box, Flex, Heading, Dialog } from "bumbag";
 import {
   useGetLessonQuery,
   Enum_Lesson_Status,
   useUpdateLessonContentMutation,
+  useCreateCommentMutation,
 } from "graphqlTypes";
 import PageWithHeader from "components/layout/withHeader";
 import LessonHeader from "components/layout/LessonHeader";
 import { LessonComponenProps } from "./Check";
+import CustomStyleForEditor from "components/CustomStyleForEditor";
 
-const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
+interface ClickPositionState {
+  clientY: number;
+  clinetX: number;
+}
+
+const Div = styled.div`
+  cursor: copy;
+`;
+
+const StyledBox = styled(Box)`
+  img {
+    width: 100%;
+  }
+`;
+
+const MakeCommentsComponent: React.FC<LessonComponenProps> = (props) => {
   const {
     query: { id },
   } = useRouter();
+  const modalRef = React.useRef();
+  const [value, setValue] = React.useState("");
+  const [clickPosition, setClickPosition] = React.useState<ClickPositionState>(
+    {}
+  );
+
   const [content, setContent] = React.useState<string>("");
   const { data, error, loading } = useGetLessonQuery({
     variables: {
@@ -27,6 +50,10 @@ const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
     updateContent,
     { data: updateContentData },
   ] = useUpdateLessonContentMutation();
+  const [
+    createComment,
+    { data: dataCreateMutation, errorCreateMutation, loadingCreateMutation },
+  ] = useCreateCommentMutation();
 
   if (error) return "ошибка";
   if (loading)
@@ -50,11 +77,61 @@ const DescriptionComponent: React.FC<LessonComponenProps> = (props) => {
       >
         {data.lesson.title}
       </Heading>
-      <Flex padding="major-2" flexBasis="30%" flexDirection="column">
-        <Editor onChange={handleChange} initialContent={data.lesson.content} />
-      </Flex>
+      <Modal.State>
+        <Modal.Disclosure
+          use={Div}
+          tabIndex={"asd"}
+          ref={modalRef}
+          onClick={(e) => {
+            document.body.focus();
+
+            setClickPosition({ clientY: e.pageY, clinetX: e.pageX });
+          }}
+          textAlign="inherit"
+        >
+          <CustomStyleForEditor>
+            <StyledBox
+              width="620px"
+              paddingTop="major-2"
+              flexBasis="30%"
+              flexDirection="column"
+              dangerouslySetInnerHTML={{
+                __html: data.lesson.content,
+              }}
+            ></StyledBox>
+          </CustomStyleForEditor>
+        </Modal.Disclosure>
+
+        <Modal preventBodyScroll={false}>
+          <Card>
+            <Input
+              placeholder="Оставьте ваш коментарий и нажмите enter"
+              width="620px"
+              value={value}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  createComment({
+                    variables: {
+                      content: value,
+                      leftOffset: clickPosition.clinetX,
+                      topOffset: clickPosition.clientY,
+                      lesson: id,
+                    },
+                  });
+
+                  setValue("");
+                  modalRef.current.click();
+                }
+              }}
+              onChange={(r) => {
+                setValue(r.target.value);
+              }}
+            />
+          </Card>
+        </Modal>
+      </Modal.State>
     </LessonHeader>
   );
 };
 
-export default DescriptionComponent;
+export default MakeCommentsComponent;

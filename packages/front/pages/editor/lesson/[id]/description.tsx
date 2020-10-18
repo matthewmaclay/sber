@@ -1,5 +1,5 @@
 import React from "react";
-import DescriptionComponent from "components/LessonComponents/Description";
+import MakeComments from "components/LessonComponents/MakeComments";
 
-const DescriptionPage = () => <DescriptionComponent isEditor={true}  />;
+const DescriptionPage = () => <MakeComments isEditor={true}  />;
 export default DescriptionPage;
